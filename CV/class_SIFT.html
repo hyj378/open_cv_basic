@@ -5,7 +5,30 @@
   <title>cv::xfeatures2d::SIFT</title>
 </head>
 <style>
-
+  h1
+  {
+    border: 1.5px solid green;
+    margin: 0.8%;
+    padding: 0.8%;
+    width: 23%;
+  }
+  #Parameters
+  {
+    width: 80%;
+    padding: 50px;
+  }
+  #fx
+  {
+    margin: 10px;
+    width: 45%;
+    border: 1.5px solid green;
+  }
+  img
+  {
+    width: 60%;
+    height: 78%;
+    margin: 0.3%;
+  }
 </style>
 <body>
   <header>
@@ -28,8 +51,9 @@ cv::Algorithm >> cv::Feature2D >> cv::xfeatures2d::SIFT
 </p>
 
 맴버 함수 설명:
-<h3><pre>
+<div id=fx><h3><pre>
   SIFT 포인터를 반환하는 create함수
+
   static Ptr<SIFT> cv::xfeatures2d::SIFT::create	(
   		int 	nfeatures = 0,
   		int 	nOctaveLayers = 3,
@@ -37,8 +61,9 @@ cv::Algorithm >> cv::Feature2D >> cv::xfeatures2d::SIFT
   		double 	edgeThreshold = 10,
   		double 	sigma = 1.6
   	)
-</pre></h3>
-&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp변수의 의미:<br>
+</pre></h3></div>
+<div id=Parameters>
+변수의 의미:<br>
 <h3>nfeatures</h3>	The number of best features to retain. The features are ranked by their scores (measured in SIFT algorithm as the local contrast)
 남길 특징점의 개수(SIFT의 지역대비로 측정)
 <h3>nOctaveLayers</h3>
@@ -49,11 +74,17 @@ The contrast threshold used to filter out weak features in semi-uniform (low-con
 <h3>edgeThreshold</h3>	The threshold used to filter out edge-like features. Note that the its meaning is different from the contrastThreshold, i.e. the larger the edgeThreshold, the less features are filtered out (more features are retained).
 모서리 모양의 특징을 걸러내는데 사용되는 임계값이다. 이 값이 클수록 더 적은 특징이 걸러진다. 즉 더 많은 특징을 반환한다.
 <h3>sigma</h3>	The sigma of the Gaussian applied to the input image at the octave #0. If your image is captured with a weak camera with soft lenses, you might want to reduce the number.
-0층의 옥타브의 이미지(토대 영상)에 적용되는 분산값로 영상의 품질에 따라 조절 가능하다. 기본값은 1.6으로 실험을 통한 결과이다.
-
-알고리즘 설명:
-
-
+0층의 옥타브의 이미지(토대 영상)에 적용되는 분산값로 영상의 품질에 따라 조절 가능하다. 기본값은 1.6으로 실험을 통한 결과이다.</div>
+<br><br>
+알고리즘 설명:<br><br>
+<img src="..\img\SIFT(1).jpg"><br>
+위는 스케일 공간을 구축하는 방법에 대한 사진이다<br>
+&nbsp&nbsp이렇게 구축한 공간에서 정규 라플라시안과 유사한 DOG(different of gaussian)식을 통해&nbsp
+한 옥타브에서 5개의 DOG영상을 얻는다.(DOG는 이웃한 두 영상의 같은 위치의 화소간의 차)<br>
+&nbsp&nbsp이 5개의 영상 중 맨 앞과 맨끝을 제외한 3개의 영상에서 이웃한 화소 중 최대 또는 최소값을&nbsp
+특징점으로 취하되, 임계값보다 작은 극점은 제외한다.<br>
+&nbsp&nbsp이렇게 검출된 극점은 <y, x:옥타브o에서의 좌표, o:옥타브 번호, i:DOG번호>정보를 갖고&nbsp
+이를 변환하여 <y, x:0옥타브에서의 좌표, s스케일 값>을 얻을 수 있다.<br>
 <h1><a href="https://docs.opencv.org/3.4.3/d5/d3c/classcv_1_1xfeatures2d_1_1SIFT.html">더 많은 정보</a></h1>
   </article>
 </body>
