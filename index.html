@@ -13,18 +13,59 @@
   </header>
   <nav>
     <ul>
+			namespace 목록
       <li><a href="namespace_cv.html">namespace cv</a></li>
       <li>cvflann</li>
       <li>cvv</li>
       <li>matlab</li>
       <li>NcvCTprep</li>
     </ul>
+		<ul>
+			모델 목록
+			<li><a href="main modules\imgcodecs.html">imgcodecs:이미지파일 읽기, 출력</a></li>
+			<li>cvflann</li>
+			<li>cvv</li>
+			<li>matlab</li>
+			<li>NcvCTprep</li>
+		</ul>
   </nav>
 
   <article>
      c++의 캡슐화 특성을 나타내기에 웹이 젤 좋다 생각하여
-     웹으로 제작했습니다.
-     <br>위는 namespace목록 입니다.
+     웹으로 제작했습니다.	<h1>about open CV</h1>
+		 	<p>
+		 		open CV (Open Source Computer Vision Library)는 컴퓨터비전을 위한 알고리즘 입니다.<br>
+		 		api cv namespace는 open cv의 모든것이 위치해 있으므로
+		 		코드를 짤 때 using namespace cv;를 추가하던지
+		 		모든 함수 앞에 cv::를 붙여야 합니다.
+		 	</p>
+		 	<p>opencv는 자동으로 메모리를 관리합니다. 그러나 기본적으로 데이터를 공유한다는 느낌이 있어서
+		 		소멸자가 항상 버퍼의 데이터를 지우지는 않습니다.
+		 		부연하면, A데이터가 있을 때 A데이터를 가르키는 포인터가 다중으로 있을 수 있습니다.
+		 		모든 포인터가 소멸되지 않는다면, 실제 데이터A는 소멸되지 않습니다.
+		 		만약 A데이터의 원본을 손상시키지 않고 변형하고 싶다면 Mat::clone api를 사용하세요.
+		 	</p>
+		 	<p>
+		 		그러나 사용자가 직접 만든 데이터 유형같이 자동 메모리 관리 범주에서 벗어난 것들은 포인터를 이용
+		 		할 수 있습니다.
+		 		ptr template class포인터를 이용하세요.
+		 		다음과 같이 이용하세요.
+		 		<pre>
+		 			포인터 변수를 직접 선언하는 법
+		 			T* ptr = new T(...);
+		 			Ptr<T> ptr(new T(...));
+		 			Ptr<T> ptr = makePtr<T>(...);
+		 		</pre>
+		 		이미 정의된 class를 포인터변수로 선언하고 싶다면 아래처럼 이용하면 됩니다
+		 		예를 들면 pre<SIFT> 변수명 = SIFT::create();
+		 		이제 class create()를 가르키는 포인터변수가 생성된것입니다.<br>
+		 		()원래 이미 선언된 class는 자동 메모리 관리 범주에 속해있으나
+		 		현재 몇몇 Extra modules의 name들은 다른 라이브러리와 충돌해
+		 		직접 ::를 이용하거나 포인터를 이용해야하는 경우가 있다고 알고있습니다)
+		 	</p>
+
+	<h2><a href="https://docs.opencv.org/3.4.3/d1/dfb/intro.html">더 많은 정보</a></h2>
+	<h2><a href="https://docs.opencv.org/3.4.3/d9/df8/tutorial_root.html">open cv Tutorials</a></h2>
   </article>
 </body>
 </html>
