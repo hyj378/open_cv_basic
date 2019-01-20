@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+  <header>
+    <h1>과제 목록</h1>
+    <a href="../과제.html">과제 메인 화면으로</a>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="물체인식.html">물체인식</a></li>
+      <li><a href="파노라마.html">파노라마</a></li>
+    </ul>
+  </nav>
+  <article>
+    <ul>
+  <li>논문 읽기</li>
+Automatic Panoramic Image Stitching using Invariant Features<br>
+Matthew Brown and David G. Lowe<br>
+{mbrown|lowe}@cs.ubc.ca<br>
+Department of Computer Science, University of British Columbia, Vancouver, Canada.<br>
+<br><br><br>
+
+<li>논문의 구성</li>
+Section 1 Introduction<br>
+Section 2 develops the geometry of the problem and motivates our choice of invariant features.<br>
+Section 3 describes our image matching methodology (RANSAC) and a probabilistic model for image match verification.<br>
+Section 4 we describe our image alignment algorithm (bundle adjustment) which jointly optimises the parameters of each camera.<br>
+Sections 5 - 7 describe the rendering pipeline including automatic straightening, gain compensation and multi-band blending.<br>
+Section 9 we present conclusions and ideas for future work.<br>
+ <br><br><br>
+
+<li>Abstract</li>
+Previous approaches have used human input or restrictions on the image sequence in order to establish matching images. In this work, we formulate(공식화하다) stitching as a multi-image matching problem, and use invariant local features to find matches between all of the images.
+So it is insensitive to noise images that are not part of a panorama, and can recognise multiple panoramas in an unordered image dataset.<br>
+Section 1 Introduction<br>
+이전방식 :<br>
+This estimation process in panoramic image stitching needs an initialisation, which is typically provided by user input to approximately align the images, or a fixed image ordering. Our work is novel in that we require no such initialisation to be provided.
+논문의 방식:<br>
+In the research literature methods for automatic image alignment and stitching fall broadly into two categories – direct [SK95, IA99, SK99, SS00] and feature based [ZFD97, CZ98, MJ02].
+<br><br>
+Traditional feature matching methods (e.g., correlation of image patches around Harris corners [Har92, ST94]) lack the invariance properties needed to enable reliable matching of arbitrary panoramic image sequences.
+In this paper we describe an invariant feature based approach to fully automatic panoramic image stitching.
+This has several advantages over previous approaches.
+Firstly, our use of invariant features enables reliable matching of panoramic image sequences despite rotation, zoom and illumination change in the input images.
+Secondly, by viewing image stitching as a multi-image matching problem, we can automatically discover the matching relationships between the images, and recognise panoramas in unordered datasets.
+Thirdly, we generate high-quality results using multi-band blending to render seamless output panoramas.
+<br><br><br>
+<li>Section 2 develops the geometry of the problem and motivates our choice of invariant features.</li>
+Incariant한 특징을 골라내기 위해 필요한 기하학의 발전과 그 이유<br>
+Feature Matching<br>
+파노라마의 시작은 SIFT특징점을 검출하고 match시키는 것이다. SIFT특징은 서로 다른 분산값을 가진 scale-space (교재의 189쪽을 보면 알 수 있는 피라미드 구조)에 위치하고 있다.
+이 특징점에서 scale, location, orientation정보를 추출 할 수 있고 과정은 교재256쪽 SIFT기술자에 자세히 나와있다.
+이는 회전, 이동, 스케일에 불변한 similarity-invariant frame(similarity불변기술자)로 사용될 수 있다. 아핀변환에 강하고, 이동변환, 조명변환에도 강하다
+(강한 이유를 설명하는데 이해가 되지 않음 This allows edges to shift slightly without altering the descriptor vector, giving some robustness to affine change. This spatial accumulation is also important for shift invariance, since the interest point locations are typically only accurate in the 0-3 pixel range [BSW05, SZ03]. Illumination invariance is achieved by using gradients (which eliminates bias) and normalising the descriptor vector (which eliminates gain).)
+SIFT특징은 회전 및 스케일 변환에 불변하므로 우리의 시스템은 다양한 방향과 줌의 이미지를 다룰 수 있습니다.
+이러한 다양한 이미지를 다루는 일은 스케일에 공변한 단순 비교방식의 헤리스코너 같은 기술로 매칭하는 기존방식에서는 불가능합니다.
+카메라가 광학축(Z_c)을 중심으로 회전한다면, 이미지들은 일련의 homographies변환을 겪을 것이다.
+<br><br>
+변환에 대한 설명* 논문 2페이지 (1)~(5) ->이 문서의 마지막장에 정리할 예정(...?)<br>
+ 
+<li>Section 3 describes our image matching methodology (RANSAC) and a probabilistic model for image match verification.</li>
+연결된 이미지 match쌍들은 panoramas가 됩니다. 우리는 RANSAC을 통해 inliers매칭을 고르고, 이를 모델에 적용해 매칭을 확인합니다.
+
+<li>Section 4 we describe our image alignment algorithm (bundle adjustment) which jointly optimises the parameters of each camera.</li>
+이미지 조정 알고리즘 설명(bundle adjustment)<br>
+[bundle adjustment](https://en.wikipedia.org/wiki/Bundle_adjustment)<br>
+상이한 시점으로부터 다수의 3D 점을 묘사하는 이미지 세트가 주어지면, bundle adjustment알고리즘은 장면 형상을 기술하는 3D 좌표, 상대적인 운동의 파라미터, 및 사용 된 카메라의 광학 특성을 동시에 추출한다. 모든 점의 상응하는 이미지 투영을 포함하는 최적 성 기준에 따라 이미지를 획득합니다.
+</ul>
+  </article>
+</body>
+</html>
